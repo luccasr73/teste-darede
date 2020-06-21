@@ -1,6 +1,11 @@
 import axios from 'axios'
-import { API, TOKEN_KEY } from '../../env'
-import { get as getIdb } from 'idb-keyval'
+import {
+  API,
+  TOKEN_KEY
+} from '../../env'
+import {
+  get as getIdb
+} from 'idb-keyval'
 
 axios.interceptors.request.use(async function (config) {
   const token = await getIdb(TOKEN_KEY)
@@ -10,7 +15,8 @@ axios.interceptors.request.use(async function (config) {
   }
 
   return config
-}, function (err) {
+},
+function (err) {
   return Promise.reject(err)
 })
 
@@ -21,4 +27,7 @@ async function get (url, body) {
   return await axios.get(API + url, body)
 }
 
-export { post, get }
+export {
+  post,
+  get
+}
