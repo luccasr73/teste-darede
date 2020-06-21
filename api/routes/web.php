@@ -18,5 +18,6 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/cadastrar', 'UsersController@create');
+$router->post('/login', 'UsersController@login');
 $router->get('/buscar/usuarios', 'UsersController@all');
 $router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');
