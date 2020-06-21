@@ -37,7 +37,9 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         $user = UsersController::findByEmail($email);
-        if (empty($user)) {
+        $user = $user->getData()->data;
+
+        if (empty($user->email)) {
             return response()->json(['error' => 'Usuario ou senha não invalidos'], 500);
         }
 
@@ -48,7 +50,7 @@ class AuthController extends Controller
         $credentials = ['email' => $email, 'password' => $password];
 
         if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Não autorizado'], 401);
+            return response()->json(['error' => 'Não autorizado'], 401);
         }
 
         return $this->responseWithToken($token);
@@ -57,6 +59,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return response()->json(['message' => 'Deslogado'], 200);
+        return response()->json(['data' => 'Deslogado'], 200);
     }
 }
