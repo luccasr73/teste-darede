@@ -30,7 +30,7 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            $this->throwValidationException($request, $validator);
+            return response()->json(['error' => $validator->errors()->messages()], 500);
         }
 
         $email = $request->input('email');
@@ -38,11 +38,11 @@ class AuthController extends Controller
 
         $user = UsersController::findByEmail($email);
         if (empty($user)) {
-            return response('Usuario ou senha não invalidos', 400);
+            return response()->json(['error' => 'Usuario ou senha não invalidos'], 500);
         }
 
         if (!UsersController::verifyPass($password, $user->password)) {
-            return response('Usuario ou senha não invalidos', 400);
+            return response()->json(['error' => 'Usuario ou senha não invalidos'], 500);
         }
 
         $credentials = ['email' => $email, 'password' => $password];
@@ -51,7 +51,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Não autorizado'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return $this->responseWithToken($token);
     }
 
     public function logout()
