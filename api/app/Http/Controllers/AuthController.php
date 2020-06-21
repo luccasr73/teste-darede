@@ -30,7 +30,7 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->messages()], 500);
+            return response()->json(['error' => $validator->errors()->messages()], 400);
         }
 
         $email = $request->input('email');
