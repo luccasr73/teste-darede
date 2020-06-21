@@ -14,7 +14,7 @@ class User extends TestCase
         $this->json('POST', '/api/cadastrar', ['email' => 'luccasrobert@teste.com', 'password' => 'teste12345', 'confirm_password' => 'teste12345'])
             ->seeJsonStructure([
                 'data'
-            ]);
+            ])->assertResponseStatus(201);;
     }
 
     public function testErrorCreate()
@@ -23,7 +23,7 @@ class User extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(500);
+            ->assertResponseStatus(422);
     }
 
     public function testErrorCreateConfirmPass()
@@ -32,7 +32,7 @@ class User extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(500);
+            ->assertResponseStatus(422);
     }
 
     public function testVerifyPass()

@@ -12,7 +12,7 @@ class Login extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(400);
+            ->assertResponseStatus(422);
     }
     public function testErrorWithoutEmail()
     {
@@ -20,7 +20,7 @@ class Login extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(400);
+            ->assertResponseStatus(422);
     }
     public function testErrorWithoutPass()
     {
@@ -28,7 +28,7 @@ class Login extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(400);
+            ->assertResponseStatus(422);
     }
     public function testErrorWrongPass()
     {
