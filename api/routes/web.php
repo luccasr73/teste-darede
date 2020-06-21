@@ -11,13 +11,13 @@
 |
 */
 
-use App\Http\Controllers\UsersController;
 
-$router->get('/', function () use ($router) {
-    return 'Funcionando';
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('/login', 'AuthController@login');
+    $router->post('/cadastrar', 'UsersController@create');
+    $router->get('/buscar/usuarios', 'UsersController@findAll');
+    $router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');
+    $router->get('/versao', function () use ($router) {
+        return response()->json(['versao' => '1']);
+    });
 });
-
-$router->post('/cadastrar', 'UsersController@create');
-$router->post('/login', 'UsersController@login');
-$router->get('/buscar/usuarios', 'UsersController@all');
-$router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');
