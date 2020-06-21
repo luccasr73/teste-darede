@@ -18,5 +18,5 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/cadastrar', 'UsersController@create');
-$router->get('/buscar', 'UsersController@all');
-$router->get('/buscar/:email', 'UsersController@findByEmail');
+$router->get('/buscar/usuarios', 'UsersController@all');
+$router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');

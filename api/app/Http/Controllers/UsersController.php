@@ -25,7 +25,7 @@ class UsersController extends Controller
         return $user->save();
     }
 
-    public function all(){
+    public function findAll(){
         $user = Users::all();
         return $user;
     }
