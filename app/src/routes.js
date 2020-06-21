@@ -1,35 +1,51 @@
 import Cadastro from './components/Cadastro.vue'
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
+import { isSignedIn } from './services/auth'
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home,
-    beforeEnter (to, from, next) {
-
+    beforeEnter (_, __, next) { // Impede usuários não assinados
+      if (isSignedIn()) { // de acessar a página Home.
+        next()
+        return
+      }
+      next('/login')
     },
     meta: {
-      auth: true,
-      title: 'Teste Darede - Home'
+      title: 'Home - Teste Darede'
     }
   },
   {
     path: '/login',
     name: 'login',
     component: Login,
+    beforeEnter (_, __, next) { // Impede usuários não assinados
+      if (!isSignedIn()) { // de acessar a página Home.
+        next()
+        return
+      }
+      next('/')
+    },
     meta: {
-      auth: false,
-      title: 'Teste Darede - Login'
+      title: 'Login - Teste Darede'
     }
   },
   {
     path: '/cadastro',
     name: 'cadastro',
     component: Cadastro,
+    beforeEnter (_, __, next) { // Impede usuários não assinados
+      if (!isSignedIn()) { // de acessar a página Home.
+        next()
+        return
+      }
+      next('/')
+    },
     meta: {
-      auth: false,
-      title: 'Teste Darede - Cadastro'
+      title: 'Cadastro - Teste Darede'
     }
   }
 ]
