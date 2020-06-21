@@ -6,6 +6,14 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  watch: {
+    $route: {
+      handler: (to, from) => {
+        document.title = to.meta.title || 'Teste Darede'
+      },
+      immediate: true
+    }
+  }
 }
 </script>

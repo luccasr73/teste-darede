@@ -5,17 +5,32 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    beforeEnter (to, from, next) {
+
+    },
+    meta: {
+      auth: true,
+      title: 'Teste Darede - Home'
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      auth: false,
+      title: 'Teste Darede - Login'
+    }
   },
   {
     path: '/cadastro',
     name: 'cadastro',
-    component: Cadastro
+    component: Cadastro,
+    meta: {
+      auth: false,
+      title: 'Teste Darede - Cadastro'
+    }
   }
 ]
 export default routes
