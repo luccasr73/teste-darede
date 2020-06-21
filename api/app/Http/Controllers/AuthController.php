@@ -55,10 +55,4 @@ class AuthController extends Controller
 
         return $this->responseWithToken($token);
     }
-
-    public function logout()
-    {
-        Auth::logout();
-        return response()->json(['data' => 'Deslogado'], 200);
-    }
 }
