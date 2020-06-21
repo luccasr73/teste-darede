@@ -44,7 +44,7 @@ class UsersController extends Controller
             $user->email = $email;
             $user->password = Hash::make($password);
             $user->save();
-            return response()->json(['data' => 'Usuario criado com sucesso'], 200);
+            return response()->json(['data' => 'Usuario criado com sucesso'], 201);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Ocorreu um erro ao criar o usuario'], 500);
         }

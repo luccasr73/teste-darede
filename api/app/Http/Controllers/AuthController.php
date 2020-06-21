@@ -40,11 +40,11 @@ class AuthController extends Controller
         $user = $user->getData()->data;
 
         if (empty($user->email)) {
-            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 422);
+            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 401);
         }
 
         if (!UsersController::verifyPass($password, $user->password)) {
-            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 422);
+            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 401);
         }
 
         $credentials = ['email' => $email, 'password' => $password];
