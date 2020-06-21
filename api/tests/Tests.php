@@ -14,7 +14,8 @@ class Tests extends TestCase
         $this->json('GET', '/api/versao')
              ->seeJsonEquals([
                  'versao' => '1',
-        ]);
+        ])
+        ->assertResponseStatus(200);
     }
 
     
