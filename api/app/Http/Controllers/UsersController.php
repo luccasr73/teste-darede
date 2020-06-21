@@ -34,7 +34,7 @@ class UsersController extends Controller
             ]
         );
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->messages()], 500);
+            return response()->json(['error' => $validator->errors()->messages()], 500);
         }
 
         try {
