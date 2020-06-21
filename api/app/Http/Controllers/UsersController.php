@@ -5,21 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
 use App\Users;
-use Error;
+
 
 class UsersController extends Controller
 {
-
-    public function rules()
-    {
-        return [
-            'password' => 'required',
-            'email' => 'required|email|unique:users'
-        ];
-    }
-
     public function create(Request $request)
     {
         $validator = Validator::make(
@@ -81,9 +71,11 @@ class UsersController extends Controller
                 'password.required' => 'A senha precisa ter ao menos 8 caractares'
             ]
         );
+
         if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
         }
+
         $email = $request->input('email');
         $password = $request->input('password');
         $user = $this->findByEmail($email);
