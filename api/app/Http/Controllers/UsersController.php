@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Users;
 
-class UsersController extends Controller 
+class UsersController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['create']]);
     }
-    
+
     public function create(Request $request)
     {
         $validator = Validator::make(
@@ -34,26 +34,40 @@ class UsersController extends Controller
             ]
         );
         if ($validator->fails()) {
-            $this->throwValidationException($request, $validator);
+            return response()->json(['errors' => $validator->errors()->messages()], 500);
         }
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $user = new Users;
-        $user->email = $email;
-        $user->password = Hash::make($password);
-        return $user->save();
+
+        try {
+            $email = $request->input('email');
+            $password = $request->input('password');
+            $user = new Users;
+            $user->email = $email;
+            $user->password = Hash::make($password);
+            $user->save();
+            return response()->json(['data' => 'Usuario criado com sucesso'], 500);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Ocorreu um erro ao criar o usuario'], 500);
+        }
     }
 
     public static function findAll()
     {
-        $user = Users::all();
-        return $user;
+        try {
+            $user = Users::all();
+            return response()->json(['data' => $user], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Ocorreu um erro ao buscar todos os usuarios'], 500);
+        }
     }
 
     public static function findByEmail($email)
     {
-        $user = Users::where('email', $email)->first();
-        return $user;
+        try {
+            $user = Users::where('email', $email)->first();
+            return response()->json(['data' => $user], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Ocorreu um erro ao buscar o usuario'], 500);
+        }
     }
 
     public static function verifyPass($pass, $hash)
