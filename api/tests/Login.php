@@ -37,7 +37,7 @@ class Login extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(400);
+            ->assertResponseStatus(401);
     }
     public function testErrorWrongEmail()
     {
@@ -46,7 +46,7 @@ class Login extends TestCase
             ->seeJsonStructure([
                 'error'
             ])
-            ->assertResponseStatus(400);
+            ->assertResponseStatus(401);
     }
     public function testSuccess()
     {
@@ -59,4 +59,5 @@ class Login extends TestCase
             ])
             ->assertResponseStatus(200);
     }
+
 }
