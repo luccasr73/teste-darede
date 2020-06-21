@@ -30,7 +30,7 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->messages()], 400);
+            return response()->json(['error' => $validator->errors()->messages()], 422);
         }
 
         $email = $request->input('email');
@@ -40,11 +40,11 @@ class AuthController extends Controller
         $user = $user->getData()->data;
 
         if (empty($user->email)) {
-            return response()->json(['error' => 'Usuario ou senha invalidos'], 401);
+            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 422);
         }
 
         if (!UsersController::verifyPass($password, $user->password)) {
-            return response()->json(['error' => 'Usuario ou senha invalidos'], 401);
+            return response()->json(['error' => ['commom'=>'Usuario ou senha invalidos']], 422);
         }
 
         $credentials = ['email' => $email, 'password' => $password];

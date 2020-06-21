@@ -34,7 +34,7 @@ class UsersController extends Controller
             ]
         );
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->messages()], 500);
+            return response()->json(['error' => $validator->errors()->messages()], 422);
         }
 
         try {
@@ -44,7 +44,7 @@ class UsersController extends Controller
             $user->email = $email;
             $user->password = Hash::make($password);
             $user->save();
-            return response()->json(['data' => 'Usuario criado com sucesso'], 500);
+            return response()->json(['data' => 'Usuario criado com sucesso'], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Ocorreu um erro ao criar o usuario'], 500);
         }
