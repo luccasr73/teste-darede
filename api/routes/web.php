@@ -11,13 +11,12 @@
 |
 */
 
-
+$router->get('/api/versao', function () use ($router) {
+    return response()->json(['versao' => '1']);
+});
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
     $router->post('/cadastrar', 'UsersController@create');
     $router->get('/buscar/usuarios', 'UsersController@findAll');
     $router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');
-    $router->get('/versao', function () use ($router) {
-        return response()->json(['versao' => '1']);
-    });
 });
