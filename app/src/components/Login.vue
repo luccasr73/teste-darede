@@ -10,13 +10,13 @@
             </v-toolbar>
             <v-card-text>
               <v-form @submit.prevent="onSubmit()">
-                <v-text-field label="Email" name="email" v-model="email" prepend-icon="mdi-account" type="email">
+                <v-text-field label="Email" name="email" v-model="email" prepend-icon="mdi-account" type="email"  @input="$v.email.$touch()" @blur="$v.email.$touch()" :error-messages="emailErrors" required>
                 </v-text-field>
-                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password">
+                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password" :error-messages="passwordErrors" @input="$v.password.$touch()" @blur="$v.password.$touch()" required>
                 </v-text-field>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" type="submit">Login</v-btn>
+                  <v-btn color="primary" type="submit" :loading="loginLoading">Login</v-btn>
                 </v-card-actions>
                 <div class="text-center text-subtitle-1 mt-3">
                   <router-link to="/cadastro" class="grey--text">Não possui cadastro ainda? Clique aqui!</router-link>
@@ -34,25 +34,67 @@
 import {
   signIn
 } from '../services/auth'
-
+// import { validationMixin } from 'vuelidate'
+import { required, minLength, email } from 'vuelidate/lib/validators'
 export default {
 
   name: 'Login',
-
+  // mixins: [validationMixin],
+  validations: {
+    email: {
+      required,
+      email
+    },
+    password: {
+      required,
+      minLength: minLength(8)
+    }
+  },
   data: () => ({
     email: 'luccasrobert@hotmail.com',
-    password: '12345678'
+    password: '123456789',
+    loginLoading: false
   }),
-
+  computed: {
+    passwordErrors () {
+      const errors = []
+      if (!this.$v.password.$dirty) {
+        return errors
+      }
+      !this.$v.password.minLength && errors.push('A senha precisa ter ao menos 8 caractares!')
+      !this.$v.password.required && errors.push('Você precisa digitar a sua senha!')
+      return errors
+    },
+    emailErrors () {
+      const errors = []
+      if (!this.$v.email.$dirty) {
+        return errors
+      }
+      !this.$v.email.email && errors.push('Digite um email valido!')
+      !this.$v.email.required && errors.push('Você precisa digitar o seu email!')
+      return errors
+    }
+  },
   methods: {
     async onSubmit () {
+      this.loginLoading = true
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.loginLoading = false
+        return
+      }
       try {
         const data = await signIn(this.email, this.password)
-        // this.$router.push('/home')
+        this.loginLoading = false
+        // this.$router.push('/')
         console.log(data)
         console.log(process.env.VUE_APP_NOT_SECRET_CODE)
       } catch (error) {
+        this.loginLoading = false
         const data = error.response.data.error
+        // const errors = []
+        // errors.push(data)
+        // this.passwordErrors = errors
         console.log(data)
       }
     }
