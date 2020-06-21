@@ -1,14 +1,10 @@
 <?php
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 class Login extends TestCase
 {
-    //use DatabaseMigrations;
-    //use DatabaseTransactions;
-
-    use DatabaseTransactions;
+    use DatabaseMigrations;
     public function testErrorNoData()
     {
         $this->json('POST', '/api/login')
