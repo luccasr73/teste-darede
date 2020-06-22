@@ -26,7 +26,7 @@ class UsersController extends Controller
             [
                 'required' => 'O campo :attribute é obrigatorio',
                 'email' => 'Campo :attribute invalido',
-                'email.unique' => 'Este :attribute já existe',
+                'email.unique' => 'Este :attribute já está em uso',
                 'confirm_password.required' => 'O campo confirmar senha é obrigatorio',
                 'confirm_password.same' => 'As senha não são iguais',
                 'password.min' => 'A senha precisa ter ao menos 8 caractares',
