@@ -46,9 +46,16 @@ function isSignedIn () {
   }
 }
 
+function getUserId () {
+  const token = localStorage.getItem(TOKEN_KEY)
+  const decoded = decode(token)
+  return decoded.sub
+}
+
 export {
   isSignedIn,
   signOut,
   signIn,
-  signUp
+  signUp,
+  getUserId
 }
