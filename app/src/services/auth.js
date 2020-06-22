@@ -1,5 +1,4 @@
 import decode from 'jwt-decode'
-import { set, del } from 'idb-keyval'
 import { TOKEN_KEY } from '../../env'
 import {
   post
@@ -10,7 +9,7 @@ async function signIn (email, password) {
     email,
     password
   })
-  await set(TOKEN_KEY, res.data.token)
+  localStorage.setItem(TOKEN_KEY, res.data.token)
   return res
 }
 
@@ -23,17 +22,15 @@ async function signUp (email, password, confirmPassword) {
   return res
 }
 
-async function signOut () {
-  await del(TOKEN_KEY)
+function signOut () {
+  localStorage.removeItem(TOKEN_KEY)
 }
 
 function isSignedIn () {
-  const token = localStorage.getItem('token')
-
-  if (!token) {
+  const token = localStorage.getItem(TOKEN_KEY)
+  if (!token || token === null) {
     return false
   }
-
   try {
     const {
       exp: expiration

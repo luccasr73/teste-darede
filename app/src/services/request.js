@@ -3,12 +3,9 @@ import {
   API,
   TOKEN_KEY
 } from '../../env'
-import {
-  get as getIdb
-} from 'idb-keyval'
 
-axios.interceptors.request.use(async function (config) {
-  const token = await getIdb(TOKEN_KEY)
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem(TOKEN_KEY)
 
   if (token != null) {
     config.headers.Authorization = `Bearer ${token}`
