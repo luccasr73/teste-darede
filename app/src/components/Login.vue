@@ -9,10 +9,10 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <v-form @submit.prevent="onSubmit()">
-                <v-text-field label="Email" name="email" v-model="email" prepend-icon="mdi-account" type="email"  @input="$v.email.$touch()" @blur="$v.email.$touch()" :error-messages="emailErrors" required>
+              <v-form @submit.prevent="onSubmit()" ref="form">
+                <v-text-field label="Email" name="email" v-model="email" prepend-icon="mdi-account" type="email" @input="validateEmail()" @blur="validateEmail()" :error-messages="emailErrors" :rules="errors.email" required>
                 </v-text-field>
-                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password" :error-messages="passwordErrors" @input="$v.password.$touch()" @blur="$v.password.$touch()" required>
+                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password" :error-messages="passwordErrors" :rules="errors.pass" @input="validatePass()" @blur="validatePass()" required>
                 </v-text-field>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -34,12 +34,16 @@
 import {
   signIn
 } from '../services/auth'
-// import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
+import { validationMixin } from 'vuelidate'
+import {
+  required,
+  minLength,
+  email
+} from 'vuelidate/lib/validators'
 export default {
 
   name: 'Login',
-  // mixins: [validationMixin],
+  mixins: [validationMixin],
   validations: {
     email: {
       required,
@@ -52,8 +56,9 @@ export default {
   },
   data: () => ({
     email: 'luccasrobert@hotmail.com',
-    password: '123456789',
-    loginLoading: false
+    password: '12345678',
+    loginLoading: false,
+    errors: { pass: [], email: [] }
   }),
   computed: {
     passwordErrors () {
@@ -76,9 +81,18 @@ export default {
     }
   },
   methods: {
+    async validatePass () {
+      this.$v.password.$touch()
+      this.errors.pass = []
+    },
+    async validateEmail () {
+      this.$v.email.$touch()
+      this.errors.email = []
+    },
     async onSubmit () {
       this.loginLoading = true
       this.$v.$touch()
+      this.$refs.form.validate()
       if (this.$v.$invalid) {
         this.loginLoading = false
         return
@@ -86,16 +100,21 @@ export default {
       try {
         const data = await signIn(this.email, this.password)
         this.loginLoading = false
-        // this.$router.push('/')
+        this.$router.push('/')
         console.log(data)
-        console.log(process.env.VUE_APP_NOT_SECRET_CODE)
       } catch (error) {
         this.loginLoading = false
         const data = error.response.data.error
-        // const errors = []
-        // errors.push(data)
-        // this.passwordErrors = errors
-        console.log(data)
+        if (data.commom.length) {
+          this.errors.pass = [data.commom]
+          this.errors.email = [data.commom]
+        }
+        if (data.email.length) {
+          this.errors.email = [data.email]
+        }
+        if (data.password.length) {
+          this.errors.pass = [data.password]
+        }
       }
     }
   }
