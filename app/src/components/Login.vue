@@ -1,3 +1,4 @@
+
 <template>
   <v-main>
     <v-container class="fill-height" fluid>
@@ -12,7 +13,7 @@
               <v-form @submit.prevent="onSubmit()" ref="form">
                 <v-text-field label="Email" name="email" v-model="email" prepend-icon="mdi-account" type="email" @input="validateEmail()" @blur="validateEmail()" :error-messages="emailErrors" :rules="errors.email" required>
                 </v-text-field>
-                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password" :error-messages="passwordErrors" :rules="errors.pass" @input="validatePass()" @blur="validatePass()" required>
+                <v-text-field label="Senha" name="password" v-model="password" prepend-icon="mdi-lock" type="password" :error-messages="passwordErrors" :rules="errors.password" @input="validatePass()" @blur="validatePass()" required>
                 </v-text-field>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+/* eslint-disable no-prototype-builtins */
 import {
   signIn
 } from '../services/auth'
@@ -56,9 +58,9 @@ export default {
   },
   data: () => ({
     email: 'luccasrobert@hotmail.com',
-    password: '12345678',
+    password: '',
     loginLoading: false,
-    errors: { pass: [], email: [] }
+    errors: { password: [], email: [] }
   }),
   computed: {
     passwordErrors () {
@@ -83,7 +85,7 @@ export default {
   methods: {
     async validatePass () {
       this.$v.password.$touch()
-      this.errors.pass = []
+      this.errors.password = []
     },
     async validateEmail () {
       this.$v.email.$touch()
@@ -105,15 +107,16 @@ export default {
       } catch (error) {
         this.loginLoading = false
         const data = error.response.data.error
-        if (data.commom.length) {
-          this.errors.pass = [data.commom]
+        if (data.hasOwnProperty('commom')) {
+          this.errors.password = [data.commom]
           this.errors.email = [data.commom]
         }
-        if (data.email.length) {
-          this.errors.email = [data.email]
+        if (data.hasOwnProperty('email')) {
+          this.errors.email = [data.email[0]]
         }
-        if (data.password.length) {
-          this.errors.pass = [data.password]
+        if (data.hasOwnProperty('password')) {
+          console.log(data.password[0])
+          this.errors.password = [data.password[0]]
         }
       }
     }
