@@ -47,6 +47,7 @@ const routes = [
     meta: {
       title: 'Cadastro - Teste Darede'
     }
-  }
+  },
+  { path: '*', redirect: '/' }
 ]
 export default routes
