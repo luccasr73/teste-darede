@@ -57,7 +57,7 @@ export default {
     }
   },
   data: () => ({
-    email: 'luccasrobert@hotmail.com',
+    email: '',
     password: '',
     loginLoading: false,
     errors: { password: [], email: [] }

@@ -57,9 +57,9 @@ export default {
     }
   },
   data: () => ({
-    email: 'luccasrobert@hotmail.com',
-    password: '12345678',
-    confirm_password: '12345678',
+    email: '',
+    password: '',
+    confirm_password: '',
     errors: { password: [], email: [], confirm_password: [] },
     createLoading: false
   }),
