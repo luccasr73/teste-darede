@@ -55,14 +55,6 @@ class User extends TestCase
         $this->json('GET', '/api/buscar/usuarios')
             ->assertResponseStatus(401);
     }
-
-    public function testErrorFindByEmail()
-    {
-        $user = factory('App\Users')->create(['email' => 'teste@teste.com']);
-        $this->json('GET', '/api/buscar/usuario/teste@teste.com')
-            ->assertResponseStatus(401);
-    }
-
     public function testFindAll()
     {
         $user = factory('App\Users')->create();
@@ -71,12 +63,38 @@ class User extends TestCase
             ->seeJsonStructure(['data'])
             ->assertResponseStatus(200);
     }
+    public function testErrorFindByEmail()
+    {
+        $user = factory('App\Users')->create(['email' => 'teste@teste.com']);
+        $this->actingAs($user)
+            ->get('/api/buscar/usuario/email/ç~ç~')
+            ->seeJsonStructure(['data'])
+            ->assertResponseStatus(200);
+    }
 
     public function testFindByEmail()
     {
         $user = factory('App\Users')->create(['email' => 'teste@teste.com']);
         $this->actingAs($user)
-            ->get('/api/buscar/usuario/teste@teste.com')
+            ->get('/api/buscar/usuario/email/' . $user->email)
+            ->seeJsonStructure(['data'])
+            ->assertResponseStatus(200);
+    }
+
+    public function testErrorFindById()
+    {
+        $user = factory('App\Users')->create();
+        $this->actingAs($user)
+            ->get('/api/buscar/usuario/id/b')
+            ->seeJsonStructure(['error'])
+            ->assertResponseStatus(500);
+    }
+
+    public function testFindById()
+    {
+        $user = factory('App\Users')->create();
+        $this->actingAs($user)
+            ->get('/api/buscar/usuario/id/' . $user->id)
             ->seeJsonStructure(['data'])
             ->assertResponseStatus(200);
     }
