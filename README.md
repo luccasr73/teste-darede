@@ -1,5 +1,7 @@
 # Teste Darede
-
+### Requisitos
+ - PHP >= 7.2.5
+ - Node >= 8.11.0
 ## Instruções para execução do projeto
 ### Api
  1. Vá para o diretório `api`
@@ -16,7 +18,10 @@ DB_PASSWORD=secret
 JWT_SECRET=
 ```
 5. Após fazer as modificações do passo anterior, execute as `migrations` com o comando `php artisan migrate` para que as tabelas do banco sejam criadas
-6. Execute o comando `php -S localhost:8000 -t public` para executar o servidor na porta 8000
+
+Execute o comando `php -S localhost:8000 -t public` para executar o servidor na porta 8000
+
+Execute o comando `phpunit` ou `vendor\bin\phpunit` caso o primeiro não funcione, para executar os testes unitarios
 ### App
  1. Vá para o diretório `app`
  2. Execute o comando `npm i` para instalar as dependências
@@ -28,3 +33,4 @@ VUE_APP_TOKEN_KEY= 'TOKEN'
 ```
 5. Execute o comando `npm run build` para buildar a aplicação vue
 6. Execute o comando `npm run http-server` para executar o servidor na porta 8080
+
