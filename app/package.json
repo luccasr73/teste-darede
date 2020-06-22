@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "http-server": "npx http-server ./dist",
+    "http-server": "npx http-server ./dist"
   },
   "dependencies": {
     "axios": "^0.19.2",
