@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Users;
+use Exception;
 
 class UsersController extends Controller
 {
@@ -64,6 +65,19 @@ class UsersController extends Controller
     {
         try {
             $user = Users::where('email', $email)->first();
+            return response()->json(['data' => $user], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Ocorreu um erro ao buscar o usuario'], 500);
+        }
+    }
+
+    public static function findById($id)
+    {
+        try {
+            if(!is_numeric($id)){
+                return response()->json(['error' => 'Formato do id invalido'], 500);
+            }
+            $user = Users::where('id', $id)->first();
             return response()->json(['data' => $user], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Ocorreu um erro ao buscar o usuario'], 500);

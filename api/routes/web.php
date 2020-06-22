@@ -18,5 +18,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
     $router->post('/cadastrar', 'UsersController@create');
     $router->get('/buscar/usuarios', 'UsersController@findAll');
-    $router->get('/buscar/usuario/{email}', 'UsersController@findByEmail');
+    $router->get('/buscar/usuario/email/{email}', 'UsersController@findByEmail');
+    $router->get('/buscar/usuario/id/{id}', 'UsersController@findById');
 });
