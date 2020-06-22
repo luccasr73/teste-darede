@@ -18,7 +18,7 @@ DB_PASSWORD=secret
 JWT_SECRET=
 ```
 5. Após fazer as modificações do passo anterior, execute as `migrations` com o comando `php artisan migrate` para que as tabelas do banco sejam criadas
-6. Execute o comando `php -S localhost:8000 -t public` para executar o servidor na porta 8000
+6. Execute o comando `php -S localhost:8000 -t public` para executar a aplicacão na porta 8000
 7. Para executar os testes unitários use o comando `phpunit` ou `vendor\bin\phpunit` caso o primeiro não funcione
 #### rotas
 | Verbo | Caminho| Descrição| Parâmetros|
@@ -39,5 +39,5 @@ VUE_APP_API= 'http://localhost:8000/api'
 VUE_APP_TOKEN_KEY= 'TOKEN'
 ```
 5. Execute o comando `npm run build` para buildar a aplicação vue
-6. Execute o comando `npm run http-server` para executar o servidor na porta 8080
+6. Execute o comando `npm run http-server` para executar a aplicacão na porta 8080
 
