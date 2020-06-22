@@ -115,7 +115,6 @@ export default {
           this.errors.email = [data.email[0]]
         }
         if (data.hasOwnProperty('password')) {
-          console.log(data.password[0])
           this.errors.password = [data.password[0]]
         }
       }
