@@ -22,7 +22,7 @@ JWT_SECRET=
 5. Após fazer as modificações do passo anterior, execute as `migrations` com o comando `php artisan migrate` para que as tabelas do banco sejam criadas
 6. Execute o comando `php -S localhost:8000 -t public` para executar a aplicacão na porta 8000
 7. Para executar os testes unitários use o comando `phpunit` ou `vendor\bin\phpunit` caso o primeiro não funcione
-#### rotas
+#### Rotas
 | Verbo | Caminho| Descrição| Parâmetros|
 |--|--|--|--|
 | GET | /api/versao |Mostra a versão da api|-|
