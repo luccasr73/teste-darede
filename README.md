@@ -2,6 +2,8 @@
 ### Requisitos
  - PHP >= 7.2.5
  - Node >= 8.11.0
+ - Composer
+ - NPM
 ## Instruções para execução do projeto
 ### Api
  1. Vá para o diretório `api`
