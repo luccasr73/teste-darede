@@ -20,7 +20,15 @@ JWT_SECRET=
 5. Após fazer as modificações do passo anterior, execute as `migrations` com o comando `php artisan migrate` para que as tabelas do banco sejam criadas
 6. Execute o comando `php -S localhost:8000 -t public` para executar o servidor na porta 8000
 7. Para executar os testes unitários use o comando `phpunit` ou `vendor\bin\phpunit` caso o primeiro não funcione
-
+#### rotas
+| Verbo | Caminho| Descrição| Parâmetros|
+|--|--|--|--|
+| GET | /api/versao |Mostra a versão da api|-|
+|POST|/api/login|Retorna token JWT|{email, password}|
+| POST| /api/cadastrar |Cadastro de usuario|{email, password, confirm_password}|
+| GET | /api/buscar/usuarios  |Busca todos os usuarios|-|
+| GET | /api/buscar/usuario/email/{email} |Busca um usuário pelo email|-|
+| GET | /api/buscar/usuario/id/{id} |Busca um usuário pelo id|-|
 ### App
  1. Vá para o diretório `app`
  2. Execute o comando `npm i` para instalar as dependências
