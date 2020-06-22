@@ -7,8 +7,8 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    beforeEnter (_, __, next) { // Impede usuários não assinados
-      if (isSignedIn()) { // de acessar a página Home.
+    beforeEnter (_, __, next) {
+      if (isSignedIn()) {
         next()
         return
       }
